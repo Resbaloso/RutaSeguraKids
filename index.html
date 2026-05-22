@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruta Segura Kids</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#sobre-empresa"><img id="Bachyon" src="/assets/img/Bachyon.webp" alt="Logo Bachyon" width="75px"
+                        height="75px"></a>
+                <h1>Rutas Seguras</h1>
+                <h1>Kids</h1>
+            </div>
+            <div class="hamburguer">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="#sobre-empresa" class="nav-link">Sobre Nosotros</a></li>
+                <li class="nav-item"><a href="#administracion" class="nav-link">Administración</a></li>
+                <li class="nav-item"><a href="#monitoreo" class="nav-link">Rutas Activas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="inicio">
+        <section class="seccion-inicio-clima" id="inicio-carrusel">
+            <div class="overlay"></div>
+            <div class="contenido-inicio">
+                <div class="texto-inicio">
+                    <h1>Monitoreo de Rutas en Tiempo Real</h1>
+                    <p>Seguridad, control y puntualidad garantizada para el bienestar de los estudiantes.</p>
+                </div>
+                <div id="widget-clima" class="tarjeta-clima">
+                    <h3>Cargando clima local...</h3>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre-empresa" class="seccion-nosotros">
+            <article class="encabezado-nosotros">
+                <h2>Sobre Nuestra Empresa</h2>
+                <p>Conectando hogares con colegios de manera inteligente.</p>
+            </article>
+            <article class="cuadricula-nosotros">
+                <div class="texto-nosotros">
+                    <p>En <strong>Rutas Seguras Kids</strong> nos especializamos en soluciones logísticas y transporte
+                        escolar de alta confianza. Entendemos que la puntualidad y la seguridad no son negociables
+                        cuando se trata de trasladar al futuro del país.</p>
+                    <p>Con el respaldo de nuestra mascota y un equipo técnico de primer nivel, integramos herramientas
+                        digitales de vanguardia y análisis de entorno dinámico para garantizar que cada trayecto sea una
+                        experiencia tranquila y eficiente para los padres e inolvidable para los niños.</p>
+                </div>
+                <div class="insignias-nosotros">
+                    <div class="insignia">
+                        <h3>Confianza Absoluta</h3>
+                        <p>Protocolos estrictos de control y comunicación directa.</p>
+                    </div>
+                    <div class="insignia">
+                        <h3>Rutas Optimizadas</h3>
+                        <p>Planificación inteligente de trayectos para evitar retrasos.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section id="administracion" class="seccion-administracion">
+            <h2 class="titulo-seccion">Panel de Control</h2>
+            <div class="contenedor-formularios">
+                <div class="tarjeta-formulario">
+                    <h3>Registrar Nueva Ruta</h3>
+                    <form id="formulario-ruta" novalidate>
+                        <div class="grupo-formulario">
+                            <label for="nombre-ruta">Nombre de la Ruta:</label>
+                            <input type="text" id="nombre-ruta" placeholder="Ej. Ruta Norte - Primaria" required>
+                            <span class="mensaje-error">Este campo es obligatorio.</span>
+                        </div>
+                        <div class="grupo-formulario">
+                            <label for="nombre-conductor">Conductor Asignado:</label>
+                            <select id="nombre-conductor" required>
+                                <option value="" disabled selected>Cargando conductores...</option>
+                            </select>
+                            <span class="mensaje-error">Indique el conductor asignado.</span>
+                        </div>
+                        <div class="grupo-formulario">
+                            <label for="hora-salida">Hora de Salida:</label>
+                            <input type="time" id="hora-salida" required>
+                            <span class="mensaje-error">Seleccione una hora válida.</span>
+                        </div>
+                        <button type="submit" class="btn-principal">Crear Ruta</button>
+                    </form>
+                </div>
+
+                <div class="tarjeta-formulario">
+                    <h3>Asignar Estudiante</h3>
+                    <form id="formulario-estudiante" novalidate>
+                        <div class="grupo-formulario">
+                            <label for="nombre-estudiante">Nombre Completo del Alumno:</label>
+                            <input type="text" id="nombre-estudiante" placeholder="Ej. Juan Toscano Duarte" required>
+                            <span class="mensaje-error">El nombre es requerido.</span>
+                        </div>
+                        <div class="grupo-formulario">
+                            <label for="seleccion-ruta">Seleccionar Ruta Destino:</label>
+                            <select id="seleccion-ruta" required>
+                                <option value="" disabled selected>Elige una ruta activa...</option>
+                            </select>
+                            <span class="mensaje-error">Debe asociarlo a una ruta.</span>
+                        </div>
+                        <button type="submit" class="btn-acento">Asignar Estudiante</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="monitoreo" class="seccion-monitoreo">
+            <h2 class="titulo-seccion">Monitoreo de Rutas Activas</h2>
+            <div id="cuadricula-rutas" class="diseno-rutas">
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-principal">
+        <div class="footer-contenedor">
+            <div class="footer-marca">
+                <p class="footer-nombre">Rutas Seguras Kids</p>
+                <p class="footer-slogan">Conectando hogares con colegios de manera inteligente.</p>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2026 Copyright Rutas Seguras Kids</p>
+            </div>
+            <div class="footer-contacto">
+                <a href="https://youtu.be/JSqIgdxL0So?si=OWwaBKR2d0c8OqTf"><p class="footer-email">contactoRSK@gmail.com</p></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/api-clima.js"></script>
+    <script src="/js/api-conductores.js"></script>
+</body>
+
+</html>

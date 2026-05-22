@@ -1,0 +1,510 @@
+:root {
+  --color-primary: rgb(10, 9, 61);
+  --color-accent: rgb(18, 226, 70);
+  --color-danger: rgb(255, 59, 86);
+  --color-bg-light: rgb(255, 255, 255);
+  --color-text-muted: rgb(193, 196, 181);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: var(--color-primary);
+  padding: 18px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 5px solid var(--color-accent);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  color: var(--color-bg-light);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo h1:last-child {
+  color: var(--color-accent);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+}
+
+.nav-link {
+  color: var(--color-bg-light);
+  text-decoration: none;
+  transition: .3s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+.hamburguer {
+  display: none;
+  cursor: pointer;
+}
+
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  background-color: var(--color-bg-light);
+  transition: .3s ease;
+}
+
+.seccion-inicio-clima {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-primary);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seccion-inicio-clima .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(19, 11, 80, 0.276);
+  z-index: 1;
+}
+
+.contenido-inicio {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+.texto-inicio {
+  flex: 1;
+  min-width: 300px;
+}
+
+.texto-inicio h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: var(--color-accent);
+}
+
+.texto-inicio p {
+  font-size: 19.2px;
+  color: var(--color-bg-light);
+}
+
+.tarjeta-clima {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 4px solid var(--color-accent);
+  padding: 40px;
+  border-radius: 15px;
+  color: var(--color-bg-light);
+  min-width: 280px;
+  text-align: center;
+  box-shadow: 0 8px 32px 0 rgba(10, 9, 61, 0.5);
+}
+
+.seccion-nosotros {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+  gap: 40px;
+  align-items: center;
+}
+
+.encabezado-nosotros {
+  flex: 1;
+  min-width: 300px;
+}
+
+.encabezado-nosotros h2 {
+  color: var(--color-primary);
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.encabezado-nosotros p {
+  font-size: 20px;
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.cuadricula-nosotros {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.texto-nosotros p {
+  margin-bottom: 15px;
+  color: rgb(51, 51, 51);
+  line-height: 1.6;
+}
+
+.insignias-nosotros {
+  display: flex;
+  gap: 20px;
+}
+
+.insignia {
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
+  padding: 15px;
+  border-radius: 8px;
+  border-bottom: 4px solid var(--color-accent);
+  flex: 1;
+}
+
+.insignia h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: var(--color-accent);
+}
+
+.insignia p {
+  font-size: 12px;
+}
+
+.seccion-administracion,
+.seccion-monitoreo {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.titulo-seccion {
+  text-align: center;
+  color: var(--color-primary);
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.contenedor-formularios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.tarjeta-formulario {
+  background-color: var(--color-bg-light);
+  border: 1px solid rgb(221, 221, 221);
+  border-top: 4px solid var(--color-primary);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  min-width: 300px;
+}
+
+.tarjeta-formulario h3 {
+  color: var(--color-primary);
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.grupo-formulario {
+  margin-bottom: 20px;
+}
+
+.grupo-formulario label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.grupo-formulario input,
+.grupo-formulario select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.grupo-formulario input:focus,
+.grupo-formulario select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 5px rgba(18, 227, 70, 0.5);
+}
+
+.mensaje-error {
+  display: none;
+  color: var(--color-danger);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.btn-principal,
+.btn-acento {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-principal {
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
+}
+
+.btn-principal:hover {
+  background-color: rgb(5, 4, 26);
+}
+
+.btn-acento {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.btn-acento:hover {
+  background-color: rgb(15, 194, 59);
+}
+
+/*
+.tarjeta-ruta {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(224, 224, 224);
+    border-top: 5px solid rgb(18, 227, 70);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px hsla(0, 0%, 0%, 0.05);
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.titulo {
+    color: rgb(10, 9, 61);
+    font-size: 20px;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+.info {
+    color: rgb(85, 85, 85);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.info strong {
+    color: rgb(51, 51, 51);
+}
+.estudiantes-contenedor {
+    margin-top: 15px;
+    flex-grow: 1;
+}
+.estudiantes-titulo {
+    font-size: 14px;
+    color: rgb(10, 9, 61);
+    border-bottom: 1px solid #12E346;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.lista-estudiantes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.lista-estudiantes li {
+    background-color: rgb(249, 249, 249);
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: rgb(51, 51, 51);
+    border-left: 3px solid rgb(10, 9, 61);
+}
+*/
+
+.diseno-rutas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 50px;
+}
+
+.footer-contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-principal {
+  background-color: var(--color-primary);
+  padding: 40px 20px;
+  margin-top: 80px;
+  border-top: 5px solid var(--color-accent);
+}
+
+.footer-nombre {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-bg-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.footer-slogan {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+}
+.footer-copyright p {
+  font-weight: 750;
+  font-size: 14.4px;
+  color: var(--color-danger);
+  opacity: 0.9;
+  margin: 0;
+}
+.footer-principal a{
+  text-decoration: none;
+}
+
+.footer-email {
+  color: var(--color-bg-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+
+.footer-email:hover {
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .hamburguer {
+    display: block;
+  }
+
+  .hamburguer.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburguer.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburguer.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 115px;
+    gap: 0;
+    flex-direction: column;
+    background-color: var(--color-primary);
+    width: 100%;
+    text-align: center;
+    transition: .3s;
+    padding: 0;
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-item {
+    padding: 16px 0;
+  }
+
+  .seccion-inicio-clima {
+    padding: 24px;
+  }
+
+  .contenido-inicio {
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
+    margin-top: 80px;
+  }
+
+  .texto-inicio h1 {
+    font-size: 35.2px;
+    margin-bottom: 12.8px;
+  }
+
+  .texto-inicio p {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .tarjeta-clima {
+    width: 100%;
+    max-width: 360px;
+    padding: 24px;
+  }
+
+  .seccion-nosotros {
+    flex-direction: column;
+  }
+
+  .footer-principal {
+    margin-top: 48px;
+    padding: 30px 15px;
+  }
+
+  .footer-contenedor {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+}
