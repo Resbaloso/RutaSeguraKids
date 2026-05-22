@@ -1,8 +1,8 @@
 :root {
-  --color-primary: rgb(10, 9, 61);
-  --color-accent: rgb(18, 226, 70);
-  --color-danger: rgb(255, 59, 86);
-  --color-bg-light: rgb(255, 255, 255);
+  --color-primary: #0A093D;
+  --color-accent: #12E346;
+  --color-danger: #FF3B56;
+  --color-bg-light: #FFFFFF;
   --color-text-muted: rgb(193, 196, 181);
 }
 
@@ -179,7 +179,7 @@ html {
 
 .texto-nosotros p {
   margin-bottom: 15px;
-  color: rgb(51, 51, 51);
+  color: #333;
   line-height: 1.6;
 }
 
@@ -207,11 +207,39 @@ html {
   font-size: 12px;
 }
 
-.seccion-administracion,
-.seccion-monitoreo {
+.seccion-administracion {
+  position: relative;
+  width: 100%;
+  background-image: url('/assets/img/fondoformularios.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 80px 20px;
+  margin-top: 80px;
+}
+
+.seccion-administracion .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(19, 11, 80, 0.5);
+  z-index: 1;
+}
+
+.contenido-administracion {
+  position: relative;
+  z-index: 2;
   max-width: 1200px;
-  margin: 80px auto;
-  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.titulo-seccion-admin {
+  text-align: center;
+  color: var(--color-bg-light);
+  font-size: 32px;
+  margin-bottom: 40px;
 }
 
 .titulo-seccion {
@@ -229,18 +257,20 @@ html {
 }
 
 .tarjeta-formulario {
-  background-color: var(--color-bg-light);
-  border: 1px solid rgb(221, 221, 221);
-  border-top: 4px solid var(--color-primary);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 4px solid var(--color-accent);
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(10, 9, 61, 0.5);
   flex: 1;
   min-width: 300px;
+  color: var(--color-bg-light);
 }
 
 .tarjeta-formulario h3 {
-  color: var(--color-primary);
+  color: var(--color-bg-light);
   margin-bottom: 20px;
   font-size: 20px;
 }
@@ -253,14 +283,14 @@ html {
   display: block;
   font-weight: bold;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--color-bg-light);
 }
 
 .grupo-formulario input,
 .grupo-formulario select {
   width: 100%;
   padding: 12px;
-  border: 1px solid rgb(204, 204, 204);
+  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
 }
@@ -272,15 +302,9 @@ html {
   box-shadow: 0 0 5px rgba(18, 227, 70, 0.5);
 }
 
-.mensaje-error {
-  display: none;
-  color: var(--color-danger);
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.btn-principal,
-.btn-acento {
+.btn-principal {
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
   width: 100%;
   padding: 12px;
   border: none;
@@ -291,82 +315,56 @@ html {
   transition: background-color 0.3s;
 }
 
-.btn-principal {
-  background-color: var(--color-primary);
-  color: var(--color-bg-light);
-}
-
 .btn-principal:hover {
-  background-color: rgb(5, 4, 26);
+  background-color: #05041a;
 }
 
 .btn-acento {
   background-color: var(--color-accent);
   color: var(--color-primary);
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn-acento:hover {
-  background-color: rgb(15, 194, 59);
+  background-color: #0fc23b;
 }
 
-/*
-.tarjeta-ruta {
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(224, 224, 224);
-    border-top: 5px solid rgb(18, 227, 70);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 10px hsla(0, 0%, 0%, 0.05);
-    font-family: system-ui, sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.btn-peligro {
+  background-color: transparent;
+  color: var(--color-danger);
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border: 1px solid var(--color-danger);
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
-.titulo {
-    color: rgb(10, 9, 61);
-    font-size: 20px;
-    margin-bottom: 15px;
-    margin-top: 0;
+
+.btn-peligro:hover {
+  background-color: rgba(255, 59, 86, 0.2);
 }
-.info {
-    color: rgb(85, 85, 85);
-    font-size: 14px;
-    margin-bottom: 8px;
+
+.seccion-monitoreo {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
 }
-.info strong {
-    color: rgb(51, 51, 51);
-}
-.estudiantes-contenedor {
-    margin-top: 15px;
-    flex-grow: 1;
-}
-.estudiantes-titulo {
-    font-size: 14px;
-    color: rgb(10, 9, 61);
-    border-bottom: 1px solid #12E346;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
-.lista-estudiantes {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.lista-estudiantes li {
-    background-color: rgb(249, 249, 249);
-    padding: 8px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    font-size: 13px;
-    color: rgb(51, 51, 51);
-    border-left: 3px solid rgb(10, 9, 61);
-}
-*/
 
 .diseno-rutas {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 50px;
+  gap: 20px;
 }
 
 .footer-contenedor {
@@ -393,12 +391,14 @@ html {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
 .footer-slogan {
-  font-size: 18px;
-  font-weight: bold;
   color: var(--color-accent);
-  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 5px;
 }
+
 .footer-copyright p {
   font-weight: 750;
   font-size: 14.4px;
@@ -406,7 +406,8 @@ html {
   opacity: 0.9;
   margin: 0;
 }
-.footer-principal a{
+
+.footer-contacto a {
   text-decoration: none;
 }
 
@@ -448,7 +449,7 @@ html {
   .nav-menu {
     position: fixed;
     left: -100%;
-    top: 115px;
+    top: 76px;
     gap: 0;
     flex-direction: column;
     background-color: var(--color-primary);
