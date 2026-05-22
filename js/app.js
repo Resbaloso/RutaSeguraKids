@@ -1,15 +1,17 @@
 "use strict";
 
+let rutasGuardadas = JSON.parse(localStorage.getItem("rutas")) || [];
+
 const hamburguer = document.querySelector(".hamburguer");
 const navMenu = document.querySelector(".nav-menu");
 const Bachyon = document.getElementById("Bachyon");
-const yaaaa = new Audio('./assets/snd/yaaaa.mp3');
+const yaaaa = new Audio('/assets/snd/yaaaa.mp3');
 const seccionInicio = document.querySelector(".seccion-inicio-clima");
 
 const imagenesFondo = [
-    "url('./assets/img/carrusel1.jpg')",
-    "url('./assets/img/carrusel2.webp')",
-    "url('./assets/img/carrusel3.webp')"
+    "url('/assets/img/carrusel1.jpg')",
+    "url('/assets/img/carrusel2.webp')",
+    "url('/assets/img/carrusel3.webp')"
 ];
 
 hamburguer.addEventListener("click", () => {
@@ -17,29 +19,15 @@ hamburguer.addEventListener("click", () => {
     navMenu.classList.toggle("active");
 });
 
-Bachyon.addEventListener("mouseover", function() {
+Bachyon.addEventListener("mouseover", function () {
     this.src = "/assets/img/Bachyon_screm.webp";
     yaaaa.play();
 });
 
-Bachyon.addEventListener("mouseout", function() {
+Bachyon.addEventListener("mouseout", function () {
     this.src = "/assets/img/Bachyon.webp";
     yaaaa.pause();
     yaaaa.currentTime = 0;
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    let indiceActual = 0;
-    seccionInicio.style.backgroundImage = imagenesFondo[indiceActual];
-
-    const cambiarFondo = () => {
-        indiceActual++;
-        if (indiceActual >= imagenesFondo.length) {
-            indiceActual = 0; 
-        }
-        seccionInicio.style.backgroundImage = imagenesFondo[indiceActual];
-    };
-    setInterval(cambiarFondo, 6000);
 });
 
 const templateRuta = document.createElement('template');
@@ -101,7 +89,6 @@ templateRuta.innerHTML = `
     <h3 class="titulo" id="t-nombre"></h3>
     <div class="info"><strong>Conductor:</strong> <span id="t-conductor"></span></div>
     <div class="info"><strong>Salida:</strong> <span id="t-hora"></span></div>
-    
     <div class="estudiantes-contenedor">
         <div class="estudiantes-titulo"><strong>Estudiantes Asignados:</strong></div>
         <ul class="lista-estudiantes" id="t-estudiantes"></ul>
@@ -112,7 +99,7 @@ templateRuta.innerHTML = `
 class RouteCard extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: "open"});
+        this.attachShadow({ mode: "open" });
         this.shadowRoot.appendChild(templateRuta.content.cloneNode(true));
     }
 
@@ -136,10 +123,39 @@ const formularioRuta = document.getElementById("formulario-ruta");
 const formularioEstudiante = document.getElementById("formulario-estudiante");
 const cuadriculaRutas = document.getElementById("cuadricula-rutas");
 const seleccionRuta = document.getElementById("seleccion-ruta");
+const btnEliminarRuta = document.getElementById("btn-eliminar-ruta");
+
+function guardarLocal() {
+    localStorage.setItem("rutas", JSON.stringify(rutasGuardadas));
+}
+
+function renderizarRutas() {
+    cuadriculaRutas.innerHTML = "";
+    seleccionRuta.innerHTML = '<option value="" disabled selected>Elige una ruta activa...</option>';
+
+    rutasGuardadas.forEach(ruta => {
+        const tarjetaRuta = document.createElement("route-card");
+        tarjetaRuta.setAttribute("id", ruta.id);
+        tarjetaRuta.setAttribute("nombre", ruta.nombre);
+        tarjetaRuta.setAttribute("conductor", ruta.conductor);
+        tarjetaRuta.setAttribute("hora", ruta.hora);
+
+        ruta.estudiantes.forEach(estudiante => {
+            tarjetaRuta.agregarEstudiante(estudiante);
+        });
+
+        cuadriculaRutas.appendChild(tarjetaRuta);
+
+        const opcion = document.createElement("option");
+        opcion.value = ruta.id;
+        opcion.textContent = ruta.nombre;
+        seleccionRuta.appendChild(opcion);
+    });
+}
 
 formularioRuta.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const nombre = document.getElementById("nombre-ruta").value.trim();
     const conductor = document.getElementById("nombre-conductor").value;
     const hora = document.getElementById("hora-salida").value;
@@ -150,29 +166,12 @@ formularioRuta.addEventListener("submit", (e) => {
     }
 
     const idRuta = "ruta-" + Date.now();
-    const nuevaRuta = { id: idRuta, nombre, conductor, hora };
+    const nuevaRuta = { id: idRuta, nombre, conductor, hora, estudiantes: [] };
 
-    const tarjetaRuta = document.createElement("route-card");
-    tarjetaRuta.setAttribute("id", idRuta);
-    tarjetaRuta.setAttribute("nombre", nombre);
-    tarjetaRuta.setAttribute("conductor", conductor);
-    tarjetaRuta.setAttribute("hora", hora);
-    
-    cuadriculaRutas.appendChild(tarjetaRuta);
-
-    const opcion = document.createElement("option");
-    opcion.value = idRuta;
-    opcion.textContent = nombre;
-    seleccionRuta.appendChild(opcion);
-
+    rutasGuardadas.push(nuevaRuta);
+    guardarLocal();
+    renderizarRutas();
     formularioRuta.reset();
-
-    const eventoNuevaRuta = new CustomEvent("rutaCreada", { detail: nuevaRuta });
-    document.dispatchEvent(eventoNuevaRuta);
-});
-
-document.addEventListener("rutaCreada", (e) => {
-    console.log(`Sistema actualizado: Se ha creado la ruta ${e.detail.nombre} exitosamente.`);
 });
 
 formularioEstudiante.addEventListener("submit", (e) => {
@@ -186,10 +185,54 @@ formularioEstudiante.addEventListener("submit", (e) => {
         return;
     }
 
-    const tarjetaObjetivo = document.getElementById(rutaDestinoId);
-    if (tarjetaObjetivo) {
-        tarjetaObjetivo.agregarEstudiante(nombreEstudiante);
+    const indice = rutasGuardadas.findIndex(ruta => ruta.id === rutaDestinoId);
+    if (indice !== -1) {
+        rutasGuardadas[indice].estudiantes.push(nombreEstudiante);
+        guardarLocal();
+        renderizarRutas();
     }
 
     formularioEstudiante.reset();
+});
+
+btnEliminarRuta.addEventListener("click", () => {
+    if (rutasGuardadas.length > 0) {
+        rutasGuardadas.pop();
+        guardarLocal();
+        renderizarRutas();
+    } else {
+        alert("No hay rutas para eliminar.");
+    }
+});
+
+function inicializarAnimacionesJS() {
+    const elementosAnimables = document.querySelectorAll(".insignia, .tarjeta-formulario");
+
+    elementosAnimables.forEach(elemento => {
+        elemento.addEventListener("mouseenter", () => {
+            elemento.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+            elemento.style.transform = "translateY(-10px)";
+        });
+
+        elemento.addEventListener("mouseleave", () => {
+            elemento.style.transform = "translateY(0)";
+        });
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    let indiceActual = 0;
+    seccionInicio.style.backgroundImage = imagenesFondo[indiceActual];
+
+    const cambiarFondo = () => {
+        indiceActual++;
+        if (indiceActual >= imagenesFondo.length) {
+            indiceActual = 0;
+        }
+        seccionInicio.style.backgroundImage = imagenesFondo[indiceActual];
+    };
+    setInterval(cambiarFondo, 6000);
+
+    renderizarRutas();
+    inicializarAnimacionesJS();
 });
