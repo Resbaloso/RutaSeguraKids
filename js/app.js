@@ -220,6 +220,139 @@ function inicializarAnimacionesJS() {
     });
 }
 
+const personajesEasterEgg = [
+    {
+        imagen: "/assets/img/Sam - Yes Edition.webp",
+        sonido: "/assets/snd/Yes-steps.mp3",
+        ancho: "180px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/thesaac.gif",
+        sonido: "/assets/snd/specialist-dance.mp3",
+        ancho: "120px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/titocalderon.gif",
+        sonido: "/assets/snd/momo.mp3",
+        ancho: "180px",
+        alto: "180px"
+    },
+    {
+        imagen: "/assets/img/bigmanting.webp",
+        sonido: "/assets/snd/robloxahh.mp3",
+        ancho: "1050px",
+        alto: "1000px"
+    },
+    {
+        imagen: "/assets/img/combi.jpg",
+        sonido: "/assets/snd/hill-climb.mp3",
+        ancho: "300px",
+        alto: "120px"
+    },
+    {
+        imagen: "/assets/img/Sam.webp",
+        sonido: "/assets/snd/YouAreNothing.mp3",
+        ancho: "180px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/Cinco_Deluxe_Walking.webp",
+        sonido: "/assets/snd/CincoDeluxeTheme.mp3",
+        ancho: "120px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/CincoSamDeluxeWalk.webp",
+        sonido: "/assets/snd/Cincosamdeluxe.mp3",
+        ancho: "180px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/He_Do_Be_Walkin.webp",
+        sonido: "/assets/snd/Static.mp3",
+        ancho: "120px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/Crustification.webp",
+        sonido: "/assets/snd/robloxahh.mp3",
+        ancho: "120px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/Mal.webp",
+        sonido: "/assets/snd/MALBEAR.mp3",
+        ancho: "120px",
+        alto: "auto"
+    },
+    {
+        imagen: "/assets/img/homero.gif",
+        sonido: "/assets/snd/homero.mp3",
+        ancho: "180px",
+        alto: "180px"
+    },
+    {
+        imagen: "/assets/img/impreza.gif",
+        sonido: "/assets/snd/supa.mp3",
+        ancho: "500px",
+        alto: "120px"
+    }
+];
+
+document.body.style.overflowX = "hidden";
+seccionInicio.style.overflow = "visible";
+
+function invocarPersonaje() {
+    const indiceAleatorio = Math.floor(Math.random() * personajesEasterEgg.length);
+    const personajeElegido = personajesEasterEgg[indiceAleatorio];
+
+    const audioPasos = new Audio(personajeElegido.sonido);
+    audioPasos.play();
+
+    const imgPersonaje = document.createElement("img");
+    imgPersonaje.src = personajeElegido.imagen;
+    imgPersonaje.style.position = "absolute";
+
+    imgPersonaje.style.width = personajeElegido.ancho;
+    imgPersonaje.style.height = personajeElegido.alto;
+
+    imgPersonaje.style.bottom = "-5px";
+    imgPersonaje.style.left = "-250px";
+    imgPersonaje.style.zIndex = "100";
+    imgPersonaje.style.pointerEvents = "none";
+
+    seccionInicio.appendChild(imgPersonaje);
+
+    const duracion = 4000;
+    const posicionInicial = -250;
+    const posicionFinal = window.innerWidth;
+    const distanciaTotal = posicionFinal - posicionInicial;
+
+    let tiempoInicio = null;
+
+    function moverFrame(tiempoActual) {
+        if (!tiempoInicio) tiempoInicio = tiempoActual;
+        const tiempoTranscurrido = tiempoActual - tiempoInicio;
+        let progreso = tiempoTranscurrido / duracion;
+
+        if (progreso > 1) progreso = 1;
+
+        const posicionActualX = posicionInicial + (distanciaTotal * progreso);
+        imgPersonaje.style.left = posicionActualX + "px";
+
+        if (progreso < 1) {
+            requestAnimationFrame(moverFrame);
+        } else {
+            audioPasos.pause();
+            imgPersonaje.remove();
+        }
+    }
+
+    requestAnimationFrame(moverFrame);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     let indiceActual = 0;
     seccionInicio.style.backgroundImage = imagenesFondo[indiceActual];
@@ -235,4 +368,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderizarRutas();
     inicializarAnimacionesJS();
+
+    const botonEspecial = document.querySelector('img[alt="Especial"]');
+    if (botonEspecial && botonEspecial.parentElement) {
+        botonEspecial.parentElement.addEventListener("click", (e) => {
+            e.preventDefault();
+            invocarPersonaje();
+        });
+    }
 });
