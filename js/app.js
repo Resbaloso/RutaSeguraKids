@@ -39,7 +39,7 @@ templateRuta.innerHTML = `
         border-top: 5px solid rgb(18, 227, 70);
         border-radius: 8px;
         padding: 20px;
-        box-shadow: 0 4px 10px hsla(0, 0%, 0%, 0.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         font-family: system-ui, sans-serif;
         display: flex;
         flex-direction: column;
@@ -83,6 +83,23 @@ templateRuta.innerHTML = `
         font-size: 13px;
         color: rgb(51, 51, 51);
         border-left: 3px solid rgb(10, 9, 61);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .btn-eliminar-estudiante {
+        background-color: transparent;
+        color: #FF3B56;
+        border: 1px solid #FF3B56;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn-eliminar-estudiante:hover {
+        background-color: rgba(255, 59, 86, 0.2);
     }
 </style>
 <div class="tarjeta-ruta">
@@ -109,10 +126,27 @@ class RouteCard extends HTMLElement {
         this.shadowRoot.getElementById("t-hora").textContent = this.getAttribute("hora");
     }
 
-    agregarEstudiante(nombreEstudiante) {
+    agregarEstudiante(nombreEstudiante, idRuta) {
         const lista = this.shadowRoot.getElementById("t-estudiantes");
         const li = document.createElement("li");
-        li.textContent = nombreEstudiante;
+
+        const spanNombre = document.createElement("span");
+        spanNombre.textContent = nombreEstudiante;
+
+        const btnEliminar = document.createElement("button");
+        btnEliminar.textContent = "X";
+        btnEliminar.className = "btn-eliminar-estudiante";
+
+        btnEliminar.addEventListener("click", () => {
+            this.dispatchEvent(new CustomEvent("eliminar-estudiante", {
+                detail: { nombre: nombreEstudiante, rutaId: idRuta },
+                bubbles: true,
+                composed: true
+            }));
+        });
+
+        li.appendChild(spanNombre);
+        li.appendChild(btnEliminar);
         lista.appendChild(li);
     }
 }
@@ -141,7 +175,7 @@ function renderizarRutas() {
         tarjetaRuta.setAttribute("hora", ruta.hora);
 
         ruta.estudiantes.forEach(estudiante => {
-            tarjetaRuta.agregarEstudiante(estudiante);
+            tarjetaRuta.agregarEstudiante(estudiante, ruta.id);
         });
 
         cuadriculaRutas.appendChild(tarjetaRuta);
@@ -152,6 +186,17 @@ function renderizarRutas() {
         seleccionRuta.appendChild(opcion);
     });
 }
+
+document.addEventListener("eliminar-estudiante", (e) => {
+    const { nombre, rutaId } = e.detail;
+    const indiceRuta = rutasGuardadas.findIndex(r => r.id === rutaId);
+
+    if (indiceRuta !== -1) {
+        rutasGuardadas[indiceRuta].estudiantes = rutasGuardadas[indiceRuta].estudiantes.filter(est => est !== nombre);
+        guardarLocal();
+        renderizarRutas();
+    }
+});
 
 formularioRuta.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -182,6 +227,18 @@ formularioEstudiante.addEventListener("submit", (e) => {
 
     if (!nombreEstudiante || !rutaDestinoId) {
         alert("Ingrese el nombre del estudiante y seleccione una ruta.");
+        return;
+    }
+
+    let estudianteExiste = false;
+    rutasGuardadas.forEach(ruta => {
+        if (ruta.estudiantes.map(est => est.toLowerCase()).includes(nombreEstudiante.toLowerCase())) {
+            estudianteExiste = true;
+        }
+    });
+
+    if (estudianteExiste) {
+        alert(`El estudiante "${nombreEstudiante}" ya se encuentra asignado a una ruta.`);
         return;
     }
 
