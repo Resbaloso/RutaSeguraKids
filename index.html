@@ -97,9 +97,15 @@
                                 <input type="time" id="hora-salida" required>
                                 <span class="mensaje-error">Seleccione una hora válida.</span>
                             </div>
-                            <button type="submit" class="btn-principal">Crear Ruta</button>
-                            <button type="button" class="btn-peligro" id="btn-eliminar-ruta">Eliminar Última
-                                Ruta</button>
+                            <div class="grupo-formulario">
+                                <label for="nombre-renderizar">Renderizar Rutas:</label>
+                                <select id="renderizar-ruta" required>
+                                    <option value="" disabled selected>Elige una ruta para renderizar</option>
+                                </select>
+                                <span class="mensaje-error">Seleccione una ruta existente.</span>
+                            </div>
+                                <button type="submit" class="btn-principal">Crear Ruta</button>
+                                <button type="button" class="btn-peligro" id="btn-eliminar-ruta">Eliminar Última Ruta</button>
                         </form>
                     </div>
 

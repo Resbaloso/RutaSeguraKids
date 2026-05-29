@@ -45,7 +45,7 @@ templateRuta.innerHTML = `
         flex-direction: column;
         height: 100%;
     }
-    .titulo {
+    .tarjeta-ruta h3 {
         color: rgb(10, 9, 61);
         font-size: 20px;
         margin-bottom: 15px;
@@ -148,6 +148,7 @@ class RouteCard extends HTMLElement {
         li.appendChild(spanNombre);
         li.appendChild(btnEliminar);
         lista.appendChild(li);
+        
     }
 }
 
@@ -157,6 +158,7 @@ const formularioRuta = document.getElementById("formulario-ruta");
 const formularioEstudiante = document.getElementById("formulario-estudiante");
 const cuadriculaRutas = document.getElementById("cuadricula-rutas");
 const seleccionRuta = document.getElementById("seleccion-ruta");
+const seleccionEstudiantes = document.getElementById("renderizar-ruta");
 const btnEliminarRuta = document.getElementById("btn-eliminar-ruta");
 
 function guardarLocal() {
@@ -165,7 +167,7 @@ function guardarLocal() {
 
 function renderizarRutas() {
     cuadriculaRutas.innerHTML = "";
-    seleccionRuta.innerHTML = '<option value="" disabled selected>Elige una ruta activa...</option>';
+    seleccionRuta.innerHTML = '<option value="" disabled selected> Elige una ruta activa...</option>';
 
     rutasGuardadas.forEach(ruta => {
         const tarjetaRuta = document.createElement("route-card");
@@ -184,6 +186,30 @@ function renderizarRutas() {
         opcion.value = ruta.id;
         opcion.textContent = ruta.nombre;
         seleccionRuta.appendChild(opcion);
+    });
+}
+
+function renderizarEstudiantes() {
+    cuadriculaRutas.innerHTML = "";
+    seleccionEstudiantes.innerHTML = '<option value="" disabled selected> Elige una ruta activa...</option>';
+
+    rutasGuardadas.forEach(ruta => {
+        const tarjetaRuta = document.createElement("route-card");
+        tarjetaRuta.setAttribute("id", ruta.id);
+        tarjetaRuta.setAttribute("nombre", ruta.nombre);
+        tarjetaRuta.setAttribute("conductor", ruta.conductor);
+        tarjetaRuta.setAttribute("hora", ruta.hora);
+
+        ruta.estudiantes.forEach(estudiante => {
+            tarjetaRuta.agregarEstudiante(estudiante, ruta.id);
+        });
+
+        cuadriculaRutas.appendChild(tarjetaRuta);
+
+        const opcion = document.createElement("option");
+        opcion.value = ruta.id;
+        opcion.textContent = ruta.nombre;
+        seleccionEstudiantes.appendChild(opcion);
     });
 }
 
